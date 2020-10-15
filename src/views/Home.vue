@@ -5,6 +5,8 @@
     <button v-for="(item,index) in data.girls" :key="index" v-on:click="data.selectGirlFn(index)">{{item}}</button>
     <p>=====</p>
     <button @click="data.changefn()">change</button>
+    <div>{{ nowTime }}</div>
+    <div><button @click="getNowTime">显示时间</button></div>
   </div>
 </template>
 
@@ -22,6 +24,8 @@ import {
     onRenderTriggered,
     watch,
 } from "vue";
+import {nowTime,getNowTime} from "@/hooks/time";
+
 // @ is an alias to /src
 
 interface DataProps{
@@ -82,6 +86,8 @@ export default ({
     const refData = toRefs(data);
     return {
       data,
+      nowTime,
+      getNowTime,
     };
     // return {
     //   ...refData,
