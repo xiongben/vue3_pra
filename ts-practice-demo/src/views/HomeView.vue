@@ -95,6 +95,46 @@ type Test2 = type4<string[]>
 type type5<T> = T extends Array<infer U> ? U : T
 type Test3 = type5<string[]>
 
+// 类装饰器
+function classDecorator<T extends {new(...args: any[]): object}>(target: T){
+  return class extends target {
+    public newProperty = 'new property'
+    public hello = 'override'
+  }
+}
+
+@classDecorator
+class Greeter {
+  public newProperty = 'property'
+  public hello:string
+  constructor(m: string) {
+    this.hello = m
+  }
+}
+
+console.log(new Greeter('world'))
+
+// 方法装饰器
+function enumerable(bool: boolean){
+  return (target: any, propertyName: string, descriptor: PropertyDescriptor) => {
+    console.log(target, propertyName)
+    descriptor.enumerable = bool
+  }
+}
+
+class ClassF{
+  constructor(public age:number) {
+  }
+
+  @enumerable(false)
+  getAge(){
+    return this.age
+  }
+}
+
+const classf = new ClassF(18)
+console.log(classf)
+
 
 
 export default defineComponent({
