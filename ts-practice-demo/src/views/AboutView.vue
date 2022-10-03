@@ -1,132 +1,33 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <h3>{{name}}'s age : {{age}}</h3>
+    <HelloWorld :foo="fooData" :bar="barData" @changefn="changeFn"/>
+    <button @click="changeInfo">change info</button>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import {ref, onMounted, defineEmits} from "vue";
+import HelloWorld from './../components/HelloWorld.vue'
 
-class Person {
-  name: string;
-  age: number;
-  skill: string[];
+let name = ref('jack')
+let age = ref(18)
+let fooData = ref('this is foodata string')
+let barData = ref(22)
 
-  constructor(name?: string, age?: number, skill?: string[]) {
-    this.name = name?name:""
-    this.age = age?age:0
-    this.skill = skill?skill:[]
-  }
-
-  introduce(): string {
-    return "my name is" + this.name + ",i'm " + this.age
-  }
-
-  moved(distance = 20){
-    console.log(`animal moved ${distance} m`)
-  }
+function changeInfo(){
+  name.value = "Mike"
+  age.value = 24
 }
 
-interface animal {
-  name?: string,
-  age?: number,
-  [propName: string]: any
+function changeFn(data: number) {
+  console.log('子元素调用父元素的方法，参数：' + data)
 }
 
-class Octopus {
-  readonly numberOfLegs: number = 8;
-  constructor(readonly name: string) {
-  }
-}
+onMounted(() => {
+  console.log('==== onmounted ===')
+})
 
-
-abstract class Department {
-
-  constructor(public name: string) {
-  }
-
-  printName(): void {
-    console.log('Department name: ' + this.name);
-  }
-
-  abstract printMeeting(): void; // 必须在派生类中实现
-}
-
-class AccountingDepartment extends Department {
-
-  constructor() {
-    super('Accounting and Auditing'); // 在派生类的构造函数中必须调用 super()
-  }
-
-  printMeeting(): void {
-    console.log('The Accounting Department meets each Monday at 10am.');
-  }
-
-  generateReports(): void {
-    console.log('Generating accounting reports...');
-  }
-}
-
-interface GenericIdentityFn<T>{
-  (arg:T):T
-}
-
-function identity<T>(arg:T):T {
-  return arg;
-}
-
-let myIdentity:GenericIdentityFn<number> = identity
-
-function create1<T>(c:{new():T}):T {
-  return new c()
-}
-
-let person3 = create1(Person)
-console.log(person3)
-person3.moved(6666)
-
-export default defineComponent({
-  name: 'AboutView',
-  props: {
-    msg: String,
-  },
-  created() {
-    let name: string
-    let age: number
-    name = 'jack'
-    age = 18
-    console.log(`hello,my name is ${name}, age ${age}`)
-    let list1:number[]
-    list1 = [1,2,3,4]
-    let x:[number , string]
-    x = [34, 'hello']
-
-    enum Color {Red, Blue, Yellow}
-    let color1: Color
-    color1 = Color.Blue
-
-    let someVal = "eeerrrr"
-    let len1 = (someVal as string).length
-
-    let input = [1,2,3]
-    let [first, second, third] = input
-    let obj1 = {name: 'jack', age: 19, skill: 'soccer'}
-    let {name: name2, age: age2, skill} = obj1
-
-    let animal1:animal = {name: 'dog', age: 1}
-
-    let person2 = new Person()
-    person2.moved(999)
-
-    let octopus1 = new Octopus('tttt')
-    console.log(octopus1.name)
-
-    let department: AccountingDepartment;
-    department = new AccountingDepartment();
-    department.printName();
-    department.printMeeting();
-    department.generateReports();
-  },
-});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

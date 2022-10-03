@@ -3,6 +3,16 @@
 </template>
 
 <script lang="ts">
+
+// type test1<T> = T extends number | string ? T : unknown
+// type test2 = test1<string>
+// type test3 = test1<string | number>
+
+type Coord = Record<'x' | 'y' | 'z', number>
+type Coord2 = Partial<Coord>
+type Coord3 = Pick<Coord, 'x' | 'y'>
+
+
 // 索引类型
 interface Objs<T>{
   [key: string]: T

@@ -12,9 +12,6 @@ import { useRouter } from "vue-router"
 import type { Ref } from 'vue'
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
-type test1<T> = T extends number | string ? T : unknown
-type test2 = test1<string>
-
 
 export default defineComponent({
   name: 'HomeView',
