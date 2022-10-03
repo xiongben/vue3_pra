@@ -1,23 +1,16 @@
 <template>
   <div class="home">
-
     <button @click="aboutPage">to about page</button>
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, reactive, toRef, toRefs } from 'vue';
 import { useRouter } from "vue-router"
-import type { Ref } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 
 export default defineComponent({
   name: 'HomeView',
-  components: {
-    HelloWorld,
-  },
   created() {
     console.log("=====create====")
     // window.onmousedown = function(mouseEvent) {
