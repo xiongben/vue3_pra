@@ -8,6 +8,8 @@
 // type test2 = test1<string>
 // type test3 = test1<string | number>
 
+import {inject} from "vue";
+
 type Coord = Record<'x' | 'y' | 'z', number>
 type Coord2 = Partial<Coord>
 type Coord3 = Pick<Coord, 'x' | 'y'>

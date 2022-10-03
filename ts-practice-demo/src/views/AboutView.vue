@@ -7,13 +7,21 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {ref, onMounted, defineEmits} from "vue";
+import {ref, onMounted, defineEmits, provide} from "vue";
 import HelloWorld from './../components/HelloWorld.vue'
+import {key1} from "@/common/common";
 
 let name = ref('jack')
 let age = ref(18)
 let fooData = ref('this is foodata string')
 let barData = ref(22)
+
+
+//provide inject部分
+// const key = Symbol() as InjectionKey<number>
+
+
+provide(key1, 888)
 
 function changeInfo(){
   name.value = "Mike"
