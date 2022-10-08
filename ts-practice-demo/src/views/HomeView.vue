@@ -8,6 +8,13 @@
 import { defineComponent, ref, reactive, toRef, toRefs } from 'vue';
 import { useRouter } from "vue-router"
 
+// class A {
+//   protected name: string | undefined
+// }
+// interface I extends A{}
+// class B extends A implements I {
+//   protected name: string | undefined
+// }
 
 export default defineComponent({
   name: 'HomeView',
