@@ -18,21 +18,7 @@
 <script lang="ts" setup>
 import { defineComponent, ref, reactive, toRef, toRefs } from 'vue';
 import { useRouter } from "vue-router"
-// import User from "./class/User"
-
-class User {
-  public name: string
-  public tel: number
-
-  constructor(name: string, tel: number) {
-    this.name = name
-    this.tel = tel
-  }
-
-  test() {
-    console.log("fff")
-  }
-}
+import User from './class/User'
 
 const router = useRouter();
 
