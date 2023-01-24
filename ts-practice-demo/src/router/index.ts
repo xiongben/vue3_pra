@@ -1,11 +1,23 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import PhoneIndex from '../views/PhoneIndex.vue'
+import PhoneAdd from '../views/PhoneAdd.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: PhoneIndex
+  },
+  {
+    path: '/phoneIndex',
+    name: 'phoneIndex',
+    component: PhoneIndex
+  },
+  {
+    path: '/phoneAdd',
+    name: 'phoneAdd',
+    component: PhoneAdd
   },
   {
     path: '/about',
