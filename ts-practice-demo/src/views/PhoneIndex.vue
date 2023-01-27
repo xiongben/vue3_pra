@@ -6,10 +6,11 @@
       <div class="add-btn" @click="addFn">Add</div>
     </div>
     <div class="list-box">
-      <div class="list-item">
+      <div class="list-item" v-for="item in data.userList" :key="item">
         <img src="../assets/avatar1.png" class="avatar-img">
-        <div class="user-name">{{user1.name}}</div>
-        <div class="user-number">{{user1.tel}}</div>
+        <div class="user-name">{{item.name}}</div>
+        <div class="user-number">{{item.tel}}</div>
+        <div class="del-btn" @click="delFn(item)">delete</div>
       </div>
     </div>
   </div>
@@ -18,25 +19,38 @@
 <script lang="ts" setup>
 import { defineComponent, ref, reactive, toRef, toRefs } from 'vue';
 import { useRouter } from "vue-router"
+import { useStore } from "vuex"
 import User from './class/User'
 
 const router = useRouter();
+let store = useStore()
+
+console.log(store.getters.getUserList)
 
 let data = reactive({
-  name: 'jack',
-  tel: 3022201121,
+  userList: store.state.userList
 })
 
-let user = new User("mike", 3333333)
-let user1 = ref(user)
-console.log(user1.value.name)
-console.log(user1.value.tel)
+// let user = new User("mike", 3333333)
+// let user1 = ref(user)
+
 
 function addFn () {
-  router.push({path:'/phoneAdd'})
+  let user2 = new User("jack li", 22445566)
+  store.commit('addUser', user2)
+  // router.push({path:'/phoneAdd'})
 }
 
-
+function delFn (item: User) {
+  let newList = store.getters.getUserList
+  for(let i = 0; i < newList.length; i++) {
+    if (newList[i].tel == item.tel) {
+      newList.splice(i, 1)
+      store.commit('uploadUserList', newList)
+      return
+    }
+  }
+}
 
 </script>
 
@@ -65,6 +79,7 @@ function addFn () {
 .list-item {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   padding: 5px 15px;
   border-bottom: 1px solid grey;
 }
@@ -81,5 +96,12 @@ function addFn () {
 .user-number {
   line-height: 40px;
   margin-left: 15px;
+}
+.del-btn {
+  color: red;
+  line-height: 40px;
+  padding: 0 6px;
+  border: 1px solid grey;
+  border-radius: 5px;
 }
 </style>
