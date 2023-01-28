@@ -34,7 +34,6 @@ let data = reactive({
 // let user = new User("mike", 3333333)
 // let user1 = ref(user)
 
-
 function addFn () {
   router.push({path:'/phoneAdd'})
 }
