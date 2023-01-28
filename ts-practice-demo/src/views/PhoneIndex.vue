@@ -36,9 +36,9 @@ let data = reactive({
 
 
 function addFn () {
-  let user2 = new User("jack li", 22445566)
-  store.commit('addUser', user2)
-  // router.push({path:'/phoneAdd'})
+  // let user2 = new User("jack li", 22445566)
+  // store.commit('addUser', user2)
+  router.push({path:'/phoneAdd'})
 }
 
 function delFn (item: User) {
