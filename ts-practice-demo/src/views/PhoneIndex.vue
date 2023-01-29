@@ -35,6 +35,7 @@ function addFn () {
   router.push({path:'/phoneAdd'})
 }
 
+
 function delFn (item: User) {
   let newList = store.getters.getUserList
   for(let i = 0; i < newList.length; i++) {
