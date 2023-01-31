@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="operator-box">
-      <div class="add-btn">Delete</div>
+      <div class="add-btn" @click="showDelBtn">Delete</div>
       <div>User List</div>
       <div class="add-btn" @click="addFn">Add</div>
     </div>
@@ -10,14 +10,14 @@
         <img src="../assets/avatar1.png" class="avatar-img">
         <div class="user-name">{{item.name}}</div>
         <div class="user-number">{{item.tel}}</div>
-        <div class="del-btn" @click="delFn(item)">delete</div>
+        <div class="del-btn" @click="delFn(item)" v-if="showDelete">delete</div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { defineComponent, ref, reactive, toRef, toRefs } from 'vue';
+import {defineComponent, ref, reactive, toRef, toRefs, Ref} from 'vue';
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
 import User from './class/User'
@@ -27,6 +27,8 @@ let store = useStore()
 
 console.log(store.getters.getUserList)
 
+let showDelete = ref<boolean>(false)
+
 let data = reactive({
   userList: store.state.userList
 })
@@ -35,12 +37,17 @@ function addFn () {
   router.push({path:'/phoneAdd'})
 }
 
+function showDelBtn() {
+  showDelete.value = true
+}
+
 function delFn (item: User) {
   let newList = store.getters.getUserList
   for(let i = 0; i < newList.length; i++) {
     if (newList[i].tel == item.tel) {
       newList.splice(i, 1)
       store.commit('uploadUserList', newList)
+      showDelete.value = false
       return
     }
   }
