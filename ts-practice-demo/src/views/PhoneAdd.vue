@@ -17,7 +17,7 @@
 import { defineComponent, ref, reactive, toRef, toRefs } from 'vue';
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
-import User from './class/User'
+import { User } from './class/User'
 
 const router = useRouter();
 let store = useStore()

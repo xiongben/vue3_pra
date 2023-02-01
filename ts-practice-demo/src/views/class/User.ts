@@ -1,7 +1,7 @@
 
 
 
-class User {
+export class User {
     public name: string
     public tel: number
 
@@ -15,4 +15,9 @@ class User {
     }
 }
 
-export default User
+export interface PropsTest {
+    msg?: string
+    labels?: string[]
+}
+
+// export default User

@@ -13,6 +13,7 @@
         <div class="del-btn" @click="delFn(item)" v-if="showDelete">delete</div>
       </div>
     </div>
+    <FooterComponent :data="footData" :labelData="footData2"/>
   </div>
 </template>
 
@@ -20,7 +21,8 @@
 import {defineComponent, ref, reactive, toRef, toRefs, Ref} from 'vue';
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
-import User from './class/User'
+import { User, PropsTest } from './class/User'
+import FooterComponent from "@/components/FooterComponent.vue";
 
 const router = useRouter();
 let store = useStore()
@@ -28,6 +30,12 @@ let store = useStore()
 console.log(store.getters.getUserList)
 
 let showDelete = ref<boolean>(false)
+
+let footData = ref<number>(224455)
+let footData2 = ref<PropsTest>({
+  msg: "kick",
+  labels: ['one', 'two', 'three']
+})
 
 let data = reactive({
   userList: store.state.userList

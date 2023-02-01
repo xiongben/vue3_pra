@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import User from "@/views/class/User";
+import { User } from "@/views/class/User";
 
 interface IState{
   userList: User[]
