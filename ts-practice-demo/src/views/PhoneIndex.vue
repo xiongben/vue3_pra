@@ -13,12 +13,12 @@
         <div class="del-btn" @click="delFn(item)" v-if="showDelete">delete</div>
       </div>
     </div>
-    <FooterComponent :data="footData" :labelData="footData2"/>
+    <FooterComponent :data="footData" :labelData="footData2" @change="changeFnTest"/>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, ref, reactive, toRef, toRefs, Ref} from 'vue';
+import {defineComponent, ref, reactive, toRef, toRefs, Ref, provide} from 'vue';
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
 import { User, PropsTest } from './class/User'
@@ -26,6 +26,7 @@ import FooterComponent from "@/components/FooterComponent.vue";
 
 const router = useRouter();
 let store = useStore()
+provide('jack', 'this is a man')
 
 console.log(store.getters.getUserList)
 
@@ -59,6 +60,10 @@ function delFn (item: User) {
       return
     }
   }
+}
+
+function changeFnTest(val: string): void {
+  console.log(val)
 }
 
 </script>
