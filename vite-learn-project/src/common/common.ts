@@ -6,4 +6,4 @@ export const testObject = {
     skill: ['豪火球之术', '须佐之男']
 }
 
-export const skills: string[] = ['水遁','火遁','雷遁','木遁','迅遁']
+export const skills: string[] = ['水遁','火遁','雷遁','木遁']
