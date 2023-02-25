@@ -16,6 +16,7 @@
     <button class="disabled:opacity-50 disabled:text-blue-700 bg-amber-100" disabled>Submit</button><br/>
     <input type="checkbox" class="appearance-none checked:bg-blue-400 checked:border-transparent">
   </div>
+  <div class="btn-xb">xb-btn</div>
 </template>
 
 <script setup lang="ts">
@@ -40,5 +41,9 @@ const count = ref(0)
   .banana {
     color: deeppink;
   }
+}
+.btn-xb {
+  width: 150px;
+  @apply bg-blue-400 hover:bg-amber-300 text-white
 }
 </style>
