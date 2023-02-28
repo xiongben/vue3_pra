@@ -7,3 +7,7 @@ export const testObject = {
 }
 
 export const skills: string[] = ['水遁','火遁','雷遁','木遁']
+
+export const getAssetImage = function (url: string) {
+    return new URL(`../assets/${url}`, import.meta.url).href
+}
