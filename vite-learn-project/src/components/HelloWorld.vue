@@ -48,7 +48,15 @@
   </div>
 <!--  object position-->
   <div class="flex flex-row">
-    
+    <div class="w-16 h-16 mx-auto bg-yellow-100">
+      <img class="object-none w-14 h-14 object-right-bottom bg-blue-400" :src="getAssetImage('vue.svg')">
+    </div>
+    <div class="w-16 h-16 mx-auto bg-yellow-100">
+      <img class="object-none w-14 h-14 object-left-bottom" :src="getAssetImage('vue.svg')">
+    </div>
+    <div class="w-16 h-16 mx-auto bg-yellow-100">
+      <img class="object-none w-14 h-14 object-right-top" :src="getAssetImage('vue.svg')">
+    </div>
   </div>
 </template>
 
