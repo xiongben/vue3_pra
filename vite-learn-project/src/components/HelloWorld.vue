@@ -58,6 +58,17 @@
       <img class="object-none w-14 h-14 object-right-top" :src="getAssetImage('vue.svg')">
     </div>
   </div>
+<!--  定位-->
+  <div class="relative w-32 h-32 bg-yellow-100">
+    <p>Relative parent</p>
+    <div class="absolute bottom-0 right-0 bg-blue-400">
+      <p>Absolute child</p>
+    </div>
+    <div class="fixed top-0 right-0 bg-pink-50 invisible">
+      <p>fix</p>
+    </div>
+  </div>
+
 </template>
 
 <script setup lang="ts">

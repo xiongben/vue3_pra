@@ -1,9 +1,11 @@
 <template>
-  <HelloWorld msg="Hello World!" />
+<!--  <HelloWorld msg="Hello World!" />-->
+  <CssDemo1 msg="Hello World!" />
 </template>
 
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
+import CssDemo1 from "./components/CssDemo1.vue";
 console.log('test')
 </script>
 
