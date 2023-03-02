@@ -19,6 +19,10 @@
       <div class="w-12 h-12 bg-blue-400">1</div>
       <div class="w-12 h-12 bg-blue-400">1</div>
     </div>
+
+    <div class="bg-pink-50 w-32 h-16 flex flex-row items-center justify-center">
+       <span class="bg-amber-200">8888</span>
+    </div>
   </div>
 
   <div class="flex flex-row">
