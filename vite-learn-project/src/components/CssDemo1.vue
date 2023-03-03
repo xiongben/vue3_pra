@@ -48,6 +48,26 @@
     </div>
   </div>
 
+  <div class="p-6 mx-auto max-w-sm bg-white rounded-xl shadow-md flex items-center mt-4 space-x-4">
+    <div class="w-12 h-12 bg-blue-400"></div>
+    <div>
+      <div class="text-xl font-medium text-black">ChitChat</div>
+      <p class="text-gray-500">You have a new message!</p>
+    </div>
+  </div>
+
+  <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div class="md:flex">
+      <div class="md:flex-shrink-0">
+        <div class="h-48 w-full md:h-full md:w-48 bg-blue-400"></div>
+      </div>
+      <div class="p-8">
+        <div>Case study</div>
+        <a class="hover:underline">Finding customers for your new business</a>
+        <p class="mt-2 text-gray-500">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
+      </div>
+    </div>
+  </div>
 
 </template>
 
