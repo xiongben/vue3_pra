@@ -48,7 +48,7 @@
     </div>
   </div>
 
-  <div class="p-6 mx-auto max-w-sm bg-white rounded-xl shadow-md flex items-center mt-4 space-x-4">
+  <div class="p-6 mx-auto max-w-sm bg-white rounded-xl shadow-md flex items-center mt-4 space-x-4 hidden">
     <div class="w-12 h-12 bg-blue-400"></div>
     <div>
       <div class="text-xl font-medium text-black">ChitChat</div>
@@ -56,7 +56,7 @@
     </div>
   </div>
 
-  <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+  <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl hidden">
     <div class="md:flex">
       <div class="md:flex-shrink-0">
         <div class="h-48 w-full md:h-full md:w-48 bg-blue-400"></div>
@@ -68,19 +68,45 @@
       </div>
     </div>
   </div>
+<!--  pinia-->
+  <div class="bg-amber-500 p-4">
+    <p>token: {{mainStoreData.token}}</p>
+    <p>userInfo: {{mainStoreData.userInfo.name}}</p>
+    <div class="flex flex-row space-x-4">
+      <div class="bg-blue-400 px-4 py-2 w-32 flex items-center justify-center text-white rounded-md" @click="setToken">set token</div>
+      <div class="bg-blue-400 px-4 py-2 w-32 flex items-center justify-center text-white rounded-md" @click="setUserInfoFn">set UserInfo</div>
+    </div>
 
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import {skills} from '../common/common'
 import { getAssetImage } from "../common/common";
+import {mainStore, UserInfo} from "../pinia";
+
+const mainStoreData = mainStore()
 
 console.log(skills)
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+
+function setToken () {
+  mainStoreData.setToken('888888888')
+}
+
+function setUserInfoFn () {
+  const user: UserInfo = {
+    name: 'jack',
+    age: 22,
+    interest: 'football',
+    score: 89
+  }
+  mainStoreData.setUserInfo(user)
+}
 </script>
 
 <style scoped>
