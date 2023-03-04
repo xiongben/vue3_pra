@@ -107,6 +107,7 @@ function setUserInfoFn () {
   }
   mainStoreData.setUserInfo(user)
 }
+
 </script>
 
 <style scoped>

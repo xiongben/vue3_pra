@@ -1,11 +1,13 @@
 <template>
 <!--  <HelloWorld msg="Hello World!" />-->
   <CssDemo1 msg="Hello World!" />
+  <Hello/>
 </template>
 
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 import CssDemo1 from "./components/CssDemo1.vue";
+import Hello from "./components/Hello.vue";
 console.log('test')
 </script>
 
