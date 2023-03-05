@@ -85,6 +85,7 @@ import { ref } from 'vue'
 import {skills} from '../common/common'
 import { getAssetImage } from "../common/common";
 import {mainStore, UserInfo} from "../pinia";
+import axios from "axios";
 
 const mainStoreData = mainStore()
 
@@ -93,6 +94,7 @@ console.log(skills)
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+getList()
 
 function setToken () {
   mainStoreData.setToken('888888888')
@@ -106,6 +108,12 @@ function setUserInfoFn () {
     score: 89
   }
   mainStoreData.setUserInfo(user)
+}
+
+function getList () {
+  axios.post("/getCardList").then((response) => {
+    console.log(response.data)
+  })
 }
 
 </script>
