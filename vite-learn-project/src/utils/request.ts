@@ -1,11 +1,12 @@
 import Axios, {
     AxiosInstance,
     AxiosRequestConfig,
-    CustomParamsSerializer
+    CustomParamsSerializer, InternalAxiosRequestConfig
 } from "axios";
 import { stringify } from "qs";
 import {BaseHttpRequestConfig} from "./types";
 import config from "tailwindcss/defaultConfig";
+import {getToken} from "./auth";
 
 
 const defaultConfig: AxiosRequestConfig = {
@@ -47,9 +48,34 @@ class BaseHttp {
 
     /** 请求拦截 */
     private httpInterceptorsRequest(): void {
-        BaseHttp.axiosInstance.interceptors.request.use(
-            async (config: BaseHttpRequestConfig) => {
-
+        Axios.interceptors.request.use(
+            (config: InternalAxiosRequestConfig) => {
+                return config
+            },
+            // async (config: BaseHttpRequestConfig) => {
+            //     if (typeof config.beforeRequestCallback === "function") {
+            //         config.beforeRequestCallback(config);
+            //         return config;
+            //     }
+            //     if (BaseHttp.initConfig.beforeRequestCallback) {
+            //         BaseHttp.initConfig.beforeRequestCallback(config);
+            //         return config;
+            //     }
+            //     // 设置白名单
+            //     const whiteList = ["/login","/refreshToken"];
+                // return whiteList.some(v => config.url?.indexOf(v) > -1) ? config :
+                //     new Promise(resolve => {
+                //         const data = getToken();
+                //         if(data) {
+                //             config.headers!["Authorization"] = data;
+                //             resolve(config);
+                //         } else {
+                //             resolve(config);
+                //         }
+                //     })
+            // },
+            error => {
+                return Promise.reject(error);
             }
         )
     }
