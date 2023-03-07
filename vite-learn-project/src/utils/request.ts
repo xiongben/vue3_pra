@@ -60,7 +60,7 @@ class BaseHttp {
                     new Promise(resolve => {
                         const data = getToken();
                         if(data) {
-                            // config.headers["Authorization"] = data;
+                            config.headers.Authorization = '666666'
                             resolve(config);
                         } else {
                             resolve(config);
