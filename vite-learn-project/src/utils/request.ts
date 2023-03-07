@@ -4,7 +4,7 @@ import Axios, {
     CustomParamsSerializer, InternalAxiosRequestConfig
 } from "axios";
 import { stringify } from "qs";
-import {BaseHttpRequestConfig} from "./types";
+import {BaseHttpRequestConfig, RequestMethods} from "./types";
 import config from "tailwindcss/defaultConfig";
 import {getToken} from "./auth";
 
@@ -22,10 +22,6 @@ const defaultConfig: AxiosRequestConfig = {
 };
 
 class BaseHttp {
-    constructor() {
-
-    }
-
     /** token过期后，暂存待执行的请求 */
     private static requests:any[] = [];
 
@@ -34,7 +30,14 @@ class BaseHttp {
 
     private static initConfig:BaseHttpRequestConfig = {};
 
-    private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
+    axiosInstance: AxiosInstance
+    constructor() {
+        this.axiosInstance = Axios.create(defaultConfig)
+        this.httpInterceptorsRequest()
+        this.httpInterceptorsResponse()
+    }
+
+
 
     /** 重连原始请求 */
     private static retryOriginalRequest(config: BaseHttpRequestConfig) {
@@ -48,32 +51,22 @@ class BaseHttp {
 
     /** 请求拦截 */
     private httpInterceptorsRequest(): void {
-        Axios.interceptors.request.use(
+        this.axiosInstance.interceptors.request.use(
             (config: InternalAxiosRequestConfig) => {
-                return config
+                console.log(config)
+                // 设置白名单
+                const whiteList = ["/login","/refreshToken"];
+                return whiteList.some(v => config.url!.indexOf(v) > -1) ? config :
+                    new Promise(resolve => {
+                        const data = getToken();
+                        if(data) {
+                            // config.headers["Authorization"] = data;
+                            resolve(config);
+                        } else {
+                            resolve(config);
+                        }
+                    })
             },
-            // async (config: BaseHttpRequestConfig) => {
-            //     if (typeof config.beforeRequestCallback === "function") {
-            //         config.beforeRequestCallback(config);
-            //         return config;
-            //     }
-            //     if (BaseHttp.initConfig.beforeRequestCallback) {
-            //         BaseHttp.initConfig.beforeRequestCallback(config);
-            //         return config;
-            //     }
-            //     // 设置白名单
-            //     const whiteList = ["/login","/refreshToken"];
-                // return whiteList.some(v => config.url?.indexOf(v) > -1) ? config :
-                //     new Promise(resolve => {
-                //         const data = getToken();
-                //         if(data) {
-                //             config.headers!["Authorization"] = data;
-                //             resolve(config);
-                //         } else {
-                //             resolve(config);
-                //         }
-                //     })
-            // },
             error => {
                 return Promise.reject(error);
             }
@@ -81,4 +74,40 @@ class BaseHttp {
     }
 
     /** 响应拦截 */
+    private httpInterceptorsResponse():void {
+        // Add a response interceptor
+        this.axiosInstance.interceptors.response.use(function (response) {
+            // Any status code that lie within the range of 2xx cause this function to trigger
+            // Do something with response data
+            return response;
+        }, function (error) {
+            // Any status codes that falls outside the range of 2xx cause this function to trigger
+            // Do something with response error
+            return Promise.reject(error);
+        });
+    }
+
+    public request<T>(
+        method: RequestMethods,
+        url: string,
+        param?: AxiosRequestConfig,
+        axiosConfig?: BaseHttpRequestConfig
+    ): Promise<T> {
+        const config = {
+            method,
+            url,
+            ...param,
+            ...axiosConfig
+        } as BaseHttpRequestConfig
+
+        return new Promise((resolve, reject) => {
+            this.axiosInstance.request(config).then((response: any) => {
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    }
 }
+
+export const http = new BaseHttp()

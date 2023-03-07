@@ -86,6 +86,7 @@ import {skills} from '../common/common'
 import { getAssetImage } from "../common/common";
 import {mainStore, UserInfo} from "../pinia";
 import axios from "axios";
+import {getCardList} from "../api/list";
 
 const mainStoreData = mainStore()
 
@@ -111,9 +112,12 @@ function setUserInfoFn () {
 }
 
 function getList () {
-  axios.post("/getCardList").then((response) => {
-    console.log(response.data)
+  getCardList().then(res => {
+    console.log(res)
   })
+  // axios.post("/getCardList").then((response) => {
+  //   console.log(response.data)
+  // })
 }
 
 </script>

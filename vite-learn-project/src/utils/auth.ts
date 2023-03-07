@@ -1,4 +1,4 @@
-import Cookies from "js-cookie/index";
+import Cookies from "js-cookie";
 
 export interface DataInfo<T> {
     /** token */
