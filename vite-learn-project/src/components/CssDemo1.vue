@@ -70,11 +70,9 @@
   </div>
 <!--  pinia-->
   <div class="bg-amber-500 p-4">
-    <p>token: {{mainStoreData.token}}</p>
-    <p>userInfo: {{mainStoreData.userInfo.name}}</p>
+    <p>token: {{userData.username}}</p>
     <div class="flex flex-row space-x-4">
       <div class="bg-blue-400 px-4 py-2 w-32 flex items-center justify-center text-white rounded-md" @click="setToken">set token</div>
-      <div class="bg-blue-400 px-4 py-2 w-32 flex items-center justify-center text-white rounded-md" @click="setUserInfoFn">set UserInfo</div>
     </div>
 
   </div>
@@ -84,13 +82,11 @@
 import { ref } from 'vue'
 import {skills} from '../common/common'
 import { getAssetImage } from "../common/common";
-import {mainStore, UserInfo} from "../pinia";
+import { useUserStoreHook } from "../store/modules/user";
 import axios from "axios";
 import {getCardList} from "../api/list";
 
-const mainStoreData = mainStore()
-
-console.log(skills)
+const userData = useUserStoreHook()
 
 defineProps<{ msg: string }>()
 
@@ -98,19 +94,8 @@ const count = ref(0)
 getList()
 
 function setToken () {
-  mainStoreData.setToken('888888888')
+  userData.SET_USERNAME('宇智波佐助')
 }
-
-function setUserInfoFn () {
-  const user: UserInfo = {
-    name: 'jack',
-    age: 22,
-    interest: 'football',
-    score: 89
-  }
-  mainStoreData.setUserInfo(user)
-}
-
 function getList () {
   getCardList().then(res => {
     console.log(res)
