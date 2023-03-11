@@ -1,7 +1,6 @@
 <template>
 <!--  <HelloWorld msg="Hello World!" />-->
-  <CssDemo1 msg="Hello World!" />
-  <Hello/>
+  <router-view />
 </template>
 
 <script setup lang="ts">
