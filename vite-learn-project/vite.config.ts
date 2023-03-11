@@ -1,11 +1,17 @@
 import { ConfigEnv, UserConfigExport } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { viteMockServe } from 'vite-plugin-mock'
+import { join } from "path";
 
 // https://vitejs.dev/config/
 export default ({ command }: ConfigEnv): UserConfigExport => {
   let prodMock = true
   return {
+    resolve: {
+      alias: {
+        '@': join(__dirname, "src"),
+      }
+    },
     plugins: [
       vue(),
       viteMockServe({
@@ -18,6 +24,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
           setupProdMockServer();
         `,
       }),
+
     ],
   }
 }

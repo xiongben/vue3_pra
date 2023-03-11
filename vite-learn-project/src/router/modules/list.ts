@@ -1,5 +1,5 @@
 import { list } from "../enums";
-import {RouteConfigsTable} from "../../types/global";
+import {RouteConfigsTable} from "@/types/global";
 
 export default {
     path: "/list",
