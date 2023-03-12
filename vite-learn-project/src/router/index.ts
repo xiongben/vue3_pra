@@ -8,6 +8,8 @@ import {
 } from "vue-router";
 
 import remainingRouter from "./modules/remaining";
+import {toRouteType} from "@/types/global";
+import {ascending, handleAliveRoute} from "@/router/utils";
 
 const modules: Record<string, any> = import.meta.glob(
     ["./modules/**/*.ts", "!./modules/**/remaining.ts"],
@@ -20,6 +22,14 @@ const routes:Array<RouteRecordRaw> = [];
 Object.keys(modules).forEach(key => {
     routes.push(modules[key].default);
 });
+
+/** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
+export const constantRoutes: Array<RouteRecordRaw> = []
+
+/** 用于渲染菜单，保持原始层级 */
+export const constantMenus: Array<RouteComponent> = ascending(routes).concat(
+    ...remainingRouter
+);
 
 /** 不参与菜单的路由 */
 export const remainingPaths = Object.keys(remainingRouter).map((v:any) => {
@@ -45,5 +55,16 @@ export const router: Router = createRouter({
         });
     }
 });
+
+/** 路由白名单 */
+const whiteList = ["/login"];
+
+// router.beforeEach((to: toRouteType, _from, next) => {
+//     if (to.meta?.keepAlive) {
+//        const newMatched = to.matched
+//         handleAliveRoute(newMatched, "add")
+//
+//     }
+// })
 
 export default router;

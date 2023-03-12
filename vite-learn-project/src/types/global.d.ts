@@ -85,3 +85,11 @@ interface RouteConfigsTable {
     };
     children?: Array<RouteChildrenConfigsTable>;
 }
+
+interface toRouteType extends RouteLocationNormalized {
+    meta: {
+        roles: Array<string>;
+        keepAlive?: boolean;
+        dynamicLevel?: string;
+    };
+}

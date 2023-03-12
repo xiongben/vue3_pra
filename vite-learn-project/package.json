@@ -12,6 +12,7 @@
     "vue": "^3.2.45"
   },
   "devDependencies": {
+    "@pureadmin/utils": "^1.8.5",
     "@types/js-cookie": "^3.0.3",
     "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue": "^4.0.0",
