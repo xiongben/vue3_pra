@@ -87,7 +87,7 @@ router.beforeEach((to, _from, next) => {
     if (userInfo) {
         // 无权限跳转403页面
         if (to.meta?.roles && !isOneOfArray(to.meta?.roles as string[], userInfo?.roles as string[])) {
-            next({path: "/error/403"})
+            next({path: "/error/index"})
         }
         if (_from?.name) {
             if (externalLink) {

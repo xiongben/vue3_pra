@@ -75,10 +75,16 @@ function filterNoPermissionTree(data: RouteComponent[]) {
     return filterChildrenTree(newTree)
 }
 
+/** 初始化路由（`new Promise` 写法防止在异步请求中造成无限循环）*/
+function initRouter() {
+    
+}
+
 export {
     handleAliveRoute,
     ascending,
     filterNoPermissionTree,
     filterTree,
-    isOneOfArray
+    isOneOfArray,
+    initRouter
 }
