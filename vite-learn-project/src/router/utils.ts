@@ -79,5 +79,6 @@ export {
     handleAliveRoute,
     ascending,
     filterNoPermissionTree,
-    filterTree
+    filterTree,
+    isOneOfArray
 }

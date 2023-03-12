@@ -9,7 +9,9 @@ import {
 
 import remainingRouter from "./modules/remaining";
 import {toRouteType} from "@/types/global";
-import {ascending, handleAliveRoute} from "@/router/utils";
+import {ascending, handleAliveRoute, isOneOfArray} from "@/router/utils";
+import {isUrl, openLink, storageSession} from "@pureadmin/utils";
+import {DataInfo, sessionKey} from "@/utils/auth";
 
 const modules: Record<string, any> = import.meta.glob(
     ["./modules/**/*.ts", "!./modules/**/remaining.ts"],
@@ -59,12 +61,44 @@ export const router: Router = createRouter({
 /** 路由白名单 */
 const whiteList = ["/login"];
 
-// router.beforeEach((to: toRouteType, _from, next) => {
-//     if (to.meta?.keepAlive) {
-//        const newMatched = to.matched
-//         handleAliveRoute(newMatched, "add")
-//
-//     }
-// })
+router.beforeEach((to, _from, next) => {
+    if (to.meta?.keepAlive) {
+       const newMatched = to.matched
+        handleAliveRoute(newMatched, "add")
+        if (_from.name === undefined || _from.name === "Redirect") {
+            handleAliveRoute(newMatched);
+        }
+    }
+    const userInfo = storageSession().getItem<DataInfo<number>>(sessionKey)
+    const externalLink = isUrl(to?.name as string)
+    if (!externalLink) {
+        to.matched.some(item => {
+            if (!item.meta.title) {
+                return ""
+            } else {
+                document.title = item.meta.title as string
+            }
+        })
+    }
+    /** 如果已经登录并存在登录信息后不能跳转到路由白名单，而是继续保持在当前页面 */
+    function toCorrectRoute() {
+        whiteList.includes(to.fullPath) ? next(_from.fullPath) : next()
+    }
+    if (userInfo) {
+        // 无权限跳转403页面
+        if (to.meta?.roles && !isOneOfArray(to.meta?.roles as string[], userInfo?.roles as string[])) {
+            next({path: "/error/403"})
+        }
+        if (_from?.name) {
+            if (externalLink) {
+                openLink(to?.name as string);
+            } else {
+                toCorrectRoute();
+            }
+        } else {
+            // 刷新
+        }
+    }
+})
 
 export default router;
