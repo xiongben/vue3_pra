@@ -77,7 +77,10 @@ function filterNoPermissionTree(data: RouteComponent[]) {
 
 /** 初始化路由（`new Promise` 写法防止在异步请求中造成无限循环）*/
 function initRouter() {
-    
+    // first level: don't use catch
+    return new Promise(resolve => {
+        
+    })
 }
 
 export {

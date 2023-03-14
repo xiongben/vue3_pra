@@ -12,6 +12,9 @@ import {toRouteType} from "@/types/global";
 import {ascending, handleAliveRoute, isOneOfArray} from "@/router/utils";
 import {isUrl, openLink, storageSession} from "@pureadmin/utils";
 import {DataInfo, sessionKey} from "@/utils/auth";
+import NProgress from "@/utils/progress/index";
+import {usePermissionStoreHook} from "@/store/modules/permission";
+
 
 const modules: Record<string, any> = import.meta.glob(
     ["./modules/**/*.ts", "!./modules/**/remaining.ts"],
@@ -70,6 +73,7 @@ router.beforeEach((to, _from, next) => {
         }
     }
     const userInfo = storageSession().getItem<DataInfo<number>>(sessionKey)
+    NProgress.start()
     const externalLink = isUrl(to?.name as string)
     if (!externalLink) {
         to.matched.some(item => {
@@ -92,13 +96,31 @@ router.beforeEach((to, _from, next) => {
         if (_from?.name) {
             if (externalLink) {
                 openLink(to?.name as string);
+                NProgress.done()
             } else {
                 toCorrectRoute();
             }
         } else {
             // 刷新
+            if (usePermissionStoreHook().wholeMenus.length === 0 && to.path !== "/login") {
+
+            }
+        }
+    } else {
+        if (to.path !== "/login") {
+            if (whiteList.indexOf(to.path) !== -1) {
+                next()
+            } else {
+                next({path: "/login"})
+            }
+        } else {
+            next()
         }
     }
 })
+
+router.afterEach(() => {
+    NProgress.done();
+});
 
 export default router;
