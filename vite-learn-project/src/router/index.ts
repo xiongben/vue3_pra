@@ -62,7 +62,7 @@ export const router: Router = createRouter({
 });
 
 /** 路由白名单 */
-const whiteList = ["/login"];
+const whiteList = ["/login", "/list", "/list/card"];
 
 router.beforeEach((to, _from, next) => {
     if (to.meta?.keepAlive) {
@@ -103,7 +103,7 @@ router.beforeEach((to, _from, next) => {
         } else {
             // 刷新
             if (usePermissionStoreHook().wholeMenus.length === 0 && to.path !== "/login") {
-
+               console.log("路由刷新打点！")
             }
         }
     } else {
