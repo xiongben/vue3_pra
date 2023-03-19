@@ -1,6 +1,8 @@
-import {RouteComponent, RouteRecordNormalized} from "vue-router";
+import {RouteComponent, RouteRecordNormalized, RouteRecordRaw} from "vue-router";
 import {cloneDeep, isAllEmpty, storageSession, intersection} from "@pureadmin/utils";
 import {DataInfo, sessionKey} from "@/utils/auth";
+import {getAsyncRoutes} from "@/api/routes";
+import {usePermissionStoreHook} from "@/store/modules/permission";
 
 
 /** 处理缓存路由（添加、删除、刷新） */
@@ -8,9 +10,56 @@ function handleAliveRoute(matched: RouteRecordNormalized[], mode?: string) {
     switch (mode) {
         case "add":
             matched.forEach(v => {
-
+                usePermissionStoreHook().cacheOperate({mode: "add", name: v.name})
             })
+            break
+        case "delete":
+            usePermissionStoreHook().cacheOperate({mode: "delete", name: matched[matched.length - 1].name})
+            break
+        default:
+            usePermissionStoreHook().cacheOperate({mode: "delete", name: matched[matched.length - 1].name})
+            setTimeout(() => {
+                matched.forEach(v => {
+                    usePermissionStoreHook().cacheOperate({ mode: "add", name: v.name });
+                });
+            }, 100);
     }
+}
+
+// /** 处理动态路由（后端返回的路由） */
+// function handleAsyncRoutes(routeList) {
+//     if (routeList.length === 0) {
+//         usePermissionStoreHook().handleWholeMenus(routeList)
+//     } else {
+//
+//     }
+// }
+
+/**
+ * 将多级嵌套路由处理成一维数组
+ * @param routesList 传入路由
+ * @returns 返回处理后的一维路由
+ */
+function formatFlatteningRoutes(routesList: RouteRecordRaw[]) {
+    if (routesList.length === 0) return routesList
+
+}
+
+/** 通过path获取父级路径 */
+function getParentPaths(path: string, routes: RouteRecordRaw[]) {
+    function dfs(routes: RouteRecordRaw[], path: string, parents: string[]) {
+        for (let i = 0; i < routes.length; i++) {
+            const item = routes[i]
+            if(item.path === path) return parents
+            if(!item.children || !item.children.length) continue
+            parents.push(item.path)
+
+            if (dfs(item.children, path, parents).length) return parents
+            parents.pop()
+        }
+        return []
+    }
+    return dfs(routes, path, [])
 }
 
 function handRank(routeInfo: any) {
@@ -79,7 +128,9 @@ function filterNoPermissionTree(data: RouteComponent[]) {
 function initRouter() {
     // first level: don't use catch
     return new Promise(resolve => {
-        
+        getAsyncRoutes().then(({data}) => {
+
+        })
     })
 }
 
