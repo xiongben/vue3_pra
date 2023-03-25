@@ -62,7 +62,7 @@ export const router: Router = createRouter({
 });
 
 /** 路由白名单 */
-const whiteList = ["/login", "/list", "/list/card"];
+const whiteList = ["/login"];
 
 router.beforeEach((to, _from, next) => {
     if (to.meta?.keepAlive) {
@@ -88,24 +88,38 @@ router.beforeEach((to, _from, next) => {
     function toCorrectRoute() {
         whiteList.includes(to.fullPath) ? next(_from.fullPath) : next()
     }
+    // if (userInfo) {
+    //     // 无权限跳转403页面
+    //     if (to.meta?.roles && !isOneOfArray(to.meta?.roles as string[], userInfo?.roles as string[])) {
+    //         next({path: "/error/index"})
+    //     }
+    //     if (_from?.name) {
+    //         if (externalLink) {
+    //             openLink(to?.name as string);
+    //             NProgress.done()
+    //         } else {
+    //             toCorrectRoute();
+    //         }
+    //     } else {
+    //         // 刷新
+    //         if (usePermissionStoreHook().wholeMenus.length === 0 && to.path !== "/login") {
+    //            console.log("路由刷新打点！")
+    //         }
+    //     }
+    // } else {
+    //     if (to.path !== "/login") {
+    //         if (whiteList.indexOf(to.path) !== -1) {
+    //             next()
+    //         } else {
+    //             next({path: "/login"})
+    //         }
+    //     } else {
+    //         next()
+    //     }
+    // }
+    console.log(userInfo)
     if (userInfo) {
-        // 无权限跳转403页面
-        if (to.meta?.roles && !isOneOfArray(to.meta?.roles as string[], userInfo?.roles as string[])) {
-            next({path: "/error/index"})
-        }
-        if (_from?.name) {
-            if (externalLink) {
-                openLink(to?.name as string);
-                NProgress.done()
-            } else {
-                toCorrectRoute();
-            }
-        } else {
-            // 刷新
-            if (usePermissionStoreHook().wholeMenus.length === 0 && to.path !== "/login") {
-               console.log("路由刷新打点！")
-            }
-        }
+        toCorrectRoute()
     } else {
         if (to.path !== "/login") {
             if (whiteList.indexOf(to.path) !== -1) {

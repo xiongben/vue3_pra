@@ -3,6 +3,7 @@ import {cloneDeep, isAllEmpty, storageSession, intersection} from "@pureadmin/ut
 import {DataInfo, sessionKey} from "@/utils/auth";
 import {getAsyncRoutes} from "@/api/routes";
 import {usePermissionStoreHook} from "@/store/modules/permission";
+import router from "@/router/index";
 
 
 /** 处理缓存路由（添加、删除、刷新） */
@@ -129,9 +130,20 @@ function initRouter() {
     // first level: don't use catch
     return new Promise(resolve => {
         getAsyncRoutes().then(({data}) => {
-
+           console.log(data)
+            handleAsyncRoutes(cloneDeep(data))
+            resolve(router)
         })
     })
+}
+
+function handleAsyncRoutes(routeList: []) {
+    if (routeList.length === 0) {
+        usePermissionStoreHook().handleWholeMenus(routeList)
+    } else {
+        // 注意，keep-alive只缓存2级，后需要处理
+        usePermissionStoreHook().handleWholeMenus(routeList)
+    }
 }
 
 export {

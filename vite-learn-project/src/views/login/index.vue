@@ -14,12 +14,15 @@ import {ref} from "vue";
 import {getLogin, UserResult} from "@/api/user";
 import {useUserStoreHook} from "@/store/modules/user";
 import {initRouter} from "@/router/utils";
+import router from "@/router";
 
 let username = ref<string>()
 let pwd = ref<string>()
 
 username.value = "yyyyy"
 pwd.value = "4455566"
+
+initRouteFn()
 
 function login () {
   const params = {
@@ -32,6 +35,13 @@ function login () {
         console.log("login success!")
       })
     }
+  })
+}
+
+function initRouteFn () {
+  console.log("ppppp")
+  initRouter().then(() => {
+    console.log(router.getRoutes())
   })
 }
 </script>

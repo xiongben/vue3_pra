@@ -1,5 +1,5 @@
 import { MockMethod } from "vite-plugin-mock";
-import { system, permission, frame, tabs } from "@/router/enums";
+import { system, permission, frame, tabs, list } from "@/router/enums";
 
 /**
  * roles：页面级别权限，这里模拟二种 "admin"、"common"
@@ -194,6 +194,26 @@ const tabsRouter = {
     ]
 };
 
+
+const simpleRouter = {
+    path: "/list",
+    meta: {
+        icon: "listCheck",
+        title: "list demo",
+        rank: list
+    },
+    children: [
+        {
+            path: "/list/card",
+            name: "ListCard",
+            meta: {
+                title: "list card",
+                roles: ["admin", "common"]
+            }
+        }
+    ]
+};
+
 export default [
     {
         url: "/getAsyncRoutes",
@@ -201,7 +221,7 @@ export default [
         response: () => {
             return {
                 success: true,
-                data: [systemRouter, permissionRouter, frameRouter, tabsRouter]
+                data: [simpleRouter]
             };
         }
     }
