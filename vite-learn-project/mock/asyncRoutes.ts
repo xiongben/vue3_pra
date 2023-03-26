@@ -196,19 +196,22 @@ const tabsRouter = {
 
 
 const simpleRouter = {
-    path: "/list",
+    path: "/tabs",
+    name: "tabs",
     meta: {
         icon: "listCheck",
-        title: "list demo",
-        rank: list
+        title: "tabs demo",
+        rank: tabs,
+        roles: ["admin", "common"]
     },
     children: [
         {
-            path: "/list/card",
-            name: "ListCard",
+            path: "/tabs/index",
+            name: "TabsIndex",
             meta: {
-                title: "list card",
-                roles: ["admin", "common"]
+                icon: "card",
+                title: "tabsDemo",
+                showParent: true
             }
         }
     ]

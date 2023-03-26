@@ -62,7 +62,7 @@ export const router: Router = createRouter({
 });
 
 /** 路由白名单 */
-const whiteList = ["/login"];
+const whiteList = ["/login", "/tabs"];
 
 router.beforeEach((to, _from, next) => {
     if (to.meta?.keepAlive) {
@@ -117,7 +117,7 @@ router.beforeEach((to, _from, next) => {
     //         next()
     //     }
     // }
-    console.log(userInfo)
+    console.log("没有登陆！")
     if (userInfo) {
         toCorrectRoute()
     } else {

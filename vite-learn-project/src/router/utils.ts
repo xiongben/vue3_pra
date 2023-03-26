@@ -4,6 +4,7 @@ import {DataInfo, sessionKey} from "@/utils/auth";
 import {getAsyncRoutes} from "@/api/routes";
 import {usePermissionStoreHook} from "@/store/modules/permission";
 import router from "@/router/index";
+const modulesRoutes = import.meta.glob("/src/views/**/*.{vue,tsx}");
 
 
 /** 处理缓存路由（添加、删除、刷新） */
@@ -142,6 +143,17 @@ function handleAsyncRoutes(routeList: []) {
         usePermissionStoreHook().handleWholeMenus(routeList)
     } else {
         // 注意，keep-alive只缓存2级，后需要处理
+        const modulesRoutesKeys = Object.keys(modulesRoutes)
+        routeList.forEach((v: RouteRecordRaw) => {
+            const index = v?.component?
+                modulesRoutesKeys.findIndex(ev => ev.includes(v.component as any))
+                : modulesRoutesKeys.findIndex(ev => ev.includes(v.path))
+            // if (v.children) {
+            //     v.children[0].component = modulesRoutes[`../views${v.path}/index.vue`]
+            // }
+            v.component = modulesRoutes[modulesRoutesKeys[index]]
+            router.addRoute(v)
+        })
         usePermissionStoreHook().handleWholeMenus(routeList)
     }
 }

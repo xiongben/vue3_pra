@@ -5,6 +5,7 @@
       <input class="w-1/3 m-4 h-8 rounded-md border-blue-600 border focus:text-blue-700 indent-2 focus:outline-none" placeholder="username" v-model="username"/>
       <input class="w-1/3 m-4 h-8 rounded-md border-blue-600 border focus:text-blue-700 indent-2 focus:outline-none" placeholder="password" v-model="pwd"/>
       <div class="w-1/3 h-8 leading-8 bg-blue-600 m-4 text-center rounded-md text-white" @click="login">Login</div>
+      <div class="w-1/3 h-8 leading-8 bg-blue-600 m-4 text-center rounded-md text-white" @click="tabsFn">tabs test</div>
     </div>
   </div>
 </template>
@@ -43,6 +44,10 @@ function initRouteFn () {
   initRouter().then(() => {
     console.log(router.getRoutes())
   })
+}
+
+function tabsFn () {
+  router.push("/tabs")
 }
 </script>
 
