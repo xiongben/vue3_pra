@@ -3,6 +3,7 @@ import {store} from "../index";
 import {getLogin, refreshTokenApi, RefreshTokenResult, UserResult} from "@/api/user";
 import {storageSession} from "@pureadmin/utils";
 import {DataInfo, removeToken, sessionKey, setToken} from "@/utils/auth";
+import {resetRouter, router} from "@/router";
 
 
 export const useUserStore = defineStore({
@@ -38,8 +39,8 @@ export const useUserStore = defineStore({
             this.roles = [];
             removeToken();
             // useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
-            // resetRouter();
-            // router.push("/login");
+            resetRouter();
+            router.push("/login");
         },
         /** 刷新`token` */
         async handRefreshToken(data: object) {

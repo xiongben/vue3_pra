@@ -9,11 +9,12 @@ import {
 
 import remainingRouter from "./modules/remaining";
 import {toRouteType} from "@/types/global";
-import {ascending, handleAliveRoute, isOneOfArray} from "@/router/utils";
+import {ascending, formatFlatteningRoutes, formatTwoStageRoutes, handleAliveRoute, isOneOfArray} from "@/router/utils";
 import {isUrl, openLink, storageSession} from "@pureadmin/utils";
 import {DataInfo, sessionKey} from "@/utils/auth";
 import NProgress from "@/utils/progress/index";
 import {usePermissionStoreHook} from "@/store/modules/permission";
+import {buildHierarchyTree} from "@/utils/tree";
 
 
 const modules: Record<string, any> = import.meta.glob(
@@ -117,7 +118,6 @@ router.beforeEach((to, _from, next) => {
     //         next()
     //     }
     // }
-    console.log("没有登陆！")
     if (userInfo) {
         toCorrectRoute()
     } else {
@@ -136,5 +136,19 @@ router.beforeEach((to, _from, next) => {
 router.afterEach(() => {
     NProgress.done();
 });
+
+/** 重置路由 */
+export function resetRouter() {
+    router.getRoutes().forEach(route => {
+        const { name, meta } = route
+        if (name && router.hasRoute(name) && meta?.backstage) {
+            router.removeRoute(name)
+            router.options.routes = formatTwoStageRoutes(
+                formatFlatteningRoutes(buildHierarchyTree(ascending(routes)))
+            )
+        }
+    })
+    usePermissionStoreHook().clearAllCachePage()
+}
 
 export default router;

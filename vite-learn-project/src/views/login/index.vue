@@ -23,8 +23,6 @@ let pwd = ref<string>()
 username.value = "yyyyy"
 pwd.value = "4455566"
 
-initRouteFn()
-
 function login () {
   const params = {
     username: username,
@@ -34,6 +32,8 @@ function login () {
     if(res.success) {
       initRouter().then(() => {
         console.log("login success!")
+        console.log(router.getRoutes())
+        router.push("/home")
       })
     }
   })

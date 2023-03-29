@@ -225,6 +225,8 @@ export {
     ascending,
     filterNoPermissionTree,
     filterTree,
+    formatFlatteningRoutes,
+    formatTwoStageRoutes,
     isOneOfArray,
     initRouter
 }
