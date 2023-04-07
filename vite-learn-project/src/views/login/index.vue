@@ -23,6 +23,8 @@ let pwd = ref<string>()
 username.value = "yyyyy"
 pwd.value = "4455566"
 
+// initRouteFn()
+
 function login () {
   const params = {
     username: username,

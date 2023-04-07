@@ -161,7 +161,7 @@ function filterNoPermissionTree(data: RouteComponent[]) {
 
 /** 初始化路由（`new Promise` 写法防止在异步请求中造成无限循环）*/
 function initRouter() {
-    const CachingAsyncRoutes = true // 是否开启缓存
+    const CachingAsyncRoutes = false // 是否开启缓存
     if (CachingAsyncRoutes) {
         // 开启动态路由缓存本地sessionStorage
         const key = "async-routes";

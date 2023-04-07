@@ -5,7 +5,6 @@ import Axios, {
 } from "axios";
 import { stringify } from "qs";
 import {BaseHttpRequestConfig, RequestMethods} from "./types";
-import config from "tailwindcss/defaultConfig";
 import {getToken} from "./auth";
 
 
@@ -53,7 +52,7 @@ class BaseHttp {
     private httpInterceptorsRequest(): void {
         this.axiosInstance.interceptors.request.use(
             (config: InternalAxiosRequestConfig) => {
-                console.log(config)
+                // console.log(config)
                 // 设置白名单
                 const whiteList = ["/login","/refreshToken"];
                 return whiteList.some(v => config.url!.indexOf(v) > -1) ? config :
