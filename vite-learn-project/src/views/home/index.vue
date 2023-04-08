@@ -18,7 +18,7 @@ function logout () {
 
 function tabsFn () {
   console.log(router.getRoutes())
-  router.push("/tabs/index")
+  router.push("/tabs")
 }
 </script>
 

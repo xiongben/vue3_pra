@@ -9,7 +9,14 @@ import {
 
 import remainingRouter from "./modules/remaining";
 import {toRouteType} from "@/types/global";
-import {ascending, formatFlatteningRoutes, formatTwoStageRoutes, handleAliveRoute, isOneOfArray} from "@/router/utils";
+import {
+    ascending,
+    formatFlatteningRoutes,
+    formatTwoStageRoutes,
+    handleAliveRoute,
+    initRouter,
+    isOneOfArray
+} from "@/router/utils";
 import {isUrl, openLink, storageSession} from "@pureadmin/utils";
 import {DataInfo, sessionKey} from "@/utils/auth";
 import NProgress from "@/utils/progress/index";
@@ -119,7 +126,15 @@ router.beforeEach((to, _from, next) => {
     //     }
     // }
     if (userInfo) {
-        toCorrectRoute()
+        if (usePermissionStoreHook().wholeMenus.length === 0 && to.path !== "/login") {
+            initRouter().then(() => {
+                console.log("重新初始化路由!", router.getRoutes())
+                router.push(to.fullPath)
+                // toCorrectRoute()
+            })
+        } else {
+            toCorrectRoute()
+        }
     } else {
         if (to.path !== "/login") {
             if (whiteList.indexOf(to.path) !== -1) {

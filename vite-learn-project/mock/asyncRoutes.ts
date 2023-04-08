@@ -204,6 +204,7 @@ const simpleRouter = {
         rank: tabs,
         roles: ["admin", "common"]
     },
+    redirect: "/tabs/index",
     children: [
         {
             path: "/tabs/index",
