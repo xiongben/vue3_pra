@@ -10,6 +10,8 @@
     "moduleResolution": "Node",
     "strict": true,
     "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,

@@ -1,5 +1,6 @@
 import { ConfigEnv, UserConfigExport } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { viteMockServe } from 'vite-plugin-mock'
 import { join } from "path";
 
@@ -14,6 +15,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
     },
     plugins: [
       vue(),
+      vueJsx({}),
       viteMockServe({
         // default
         mockPath: 'mock',

@@ -13,6 +13,7 @@ const systemRouter = {
         title: "menus.hssysManagement",
         rank: system
     },
+    redirect: "/system/user/index",
     children: [
         {
             path: "/system/user/index",
@@ -29,15 +30,6 @@ const systemRouter = {
             meta: {
                 icon: "role",
                 title: "menus.hsRole",
-                roles: ["admin"]
-            }
-        },
-        {
-            path: "/system/dept/index",
-            name: "Dept",
-            meta: {
-                icon: "dept",
-                title: "menus.hsDept",
                 roles: ["admin"]
             }
         }
@@ -225,7 +217,7 @@ export default [
         response: () => {
             return {
                 success: true,
-                data: [simpleRouter]
+                data: [simpleRouter, systemRouter]
             };
         }
     }
