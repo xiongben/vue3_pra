@@ -1,6 +1,10 @@
-import {reactive, ref, computed} from "vue";
-import { type PaginationProps} from "@pureadmin/table/dist/index";
+import {reactive, ref, computed, onMounted} from "vue";
+import {type PaginationProps, TableColumnRenderer} from "@pureadmin/table/dist/index";
 import dayjs from "dayjs";
+import { message } from "@/utils/message";
+import {ElMessageBox} from "element-plus";
+import { getUserList } from "@/api/system";
+import { type VNode } from "vue";
 
 export function useUser() {
     const form = reactive({
@@ -8,7 +12,7 @@ export function useUser() {
         mobile: "",
         status: ""
     });
-    const dataList = ref([]);
+    const dataList = ref<any[]>([]);
     const loading = ref(true);
     const switchLoadMap = ref({});
     const pagination = reactive<PaginationProps>({
@@ -77,7 +81,7 @@ export function useUser() {
             cellRenderer: scope => (
                 <el-switch
                     size={scope.props.size === "small" ? "small" : "default"}
-                    loading={switchLoadMap.value[scope.index]?.loading}
+                    // loading={switchLoadMap.value?[scope.index]?.loading}
                     v-model={scope.row.status}
                     active-value={1}
                     inactive-value={0}
@@ -111,4 +115,102 @@ export function useUser() {
             "dark:hover:!text-primary"
         ];
     });
+
+    function onChange({ row , index }: {row: any, index: any}) {
+        ElMessageBox.confirm(
+            `确认要<strong>${
+                row.status === 0 ? "停用" : "启用"
+            }</strong><strong style='color:var(--el-color-primary)'>${
+                row.username
+            }</strong>用户吗?`,
+            "系统提示",
+            {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+                dangerouslyUseHTMLString: true,
+                draggable: true
+            }
+        )
+            .then(() => {
+                // switchLoadMap.value?[index] = Object.assign(
+                //     {},
+                //     switchLoadMap.value?[index] as {},
+                //     {
+                //         loading: true
+                //     }
+                // );
+                setTimeout(() => {
+                    // switchLoadMap.value?[index] = Object.assign(
+                    //     {},
+                    //     switchLoadMap.value?[index],
+                    //     {
+                    //         loading: false
+                    //     }
+                    // );
+                    message("已成功修改用户状态", {
+                        type: "success"
+                    });
+                }, 300);
+            })
+            .catch(() => {
+                row.status === 0 ? (row.status = 1) : (row.status = 0);
+            });
+    }
+
+    function handleUpdate(row: object) {
+        console.log(row);
+    }
+
+    function handleDelete(row: object) {
+        console.log(row);
+    }
+
+    function handleSizeChange(val: number) {
+        console.log(`${val} items per page`);
+    }
+
+    function handleCurrentChange(val: number) {
+        console.log(`current page: ${val}`);
+    }
+
+    function handleSelectionChange(val: any) {
+        console.log("handleSelectionChange", val);
+    }
+
+    async function onSearch() {
+        loading.value = true;
+        const { data } = await getUserList();
+        dataList.value = data!.list;
+        pagination.total = data!.total!;
+        setTimeout(() => {
+            loading.value = false;
+        }, 500);
+    }
+
+    const resetForm = (formEl:any) => {
+        if (!formEl) return;
+        formEl.resetFields();
+        onSearch();
+    };
+
+    onMounted(() => {
+        onSearch();
+    });
+
+    return {
+        form,
+        loading,
+        columns,
+        dataList,
+        pagination,
+        buttonClass,
+        onSearch,
+        resetForm,
+        handleUpdate,
+        handleDelete,
+        handleSizeChange,
+        handleCurrentChange,
+        handleSelectionChange
+    };
 }
