@@ -10,6 +10,9 @@
           <div class="btn" @click="showRawPerson">show raw person</div>
           <div class="btn" @click="addCar">add car</div>
           <div class="btn" @click="changeInfo">change info</div>
+          <p>customRef</p>
+          <h3>{{keyword}}</h3>
+          <input type="text" v-model="keyword">
       </div>
   </div>
 </template>
@@ -18,7 +21,7 @@
 
 import {useUserStoreHook} from "@/store/modules/user";
 import router from "@/router";
-import {reactive, toRaw, markRaw} from "vue";
+import {reactive, toRaw, markRaw, customRef, Ref} from "vue";
 
 interface Skill {
     name: String;
@@ -48,7 +51,24 @@ let person = reactive<Person>(
     }
 )
 
+function myRef<T>(val: T): Ref<T> {
+    return customRef((track, trigger) => {
+        return {
+            get(){
+                console.log("======get====")
+                track()
+                return val
+            },
+            set(value:T){
+                console.log("=====set=====")
+                val = value
+                trigger()
+            }
+        }
+    })
+}
 
+let keyword = myRef("hello")
 
 function showRawPerson() {
     const person1 = toRaw(person)
