@@ -1,6 +1,7 @@
 <template>
   <div class="bg-blue-100 flex flex-col">
     home demo page
+      <child-component :name="childName" :detail="childParams" @changeSth="changeSth"/>
       <div class="w-1/6 h-8 leading-8 text-center bg-yellow-200 m-4 text-black">tabs page </div>
     <div class="btn" @click="logout">LogOut</div>
     <div class="btn" @click="tabsFn">tabs test</div>
@@ -21,7 +22,9 @@
 
 import {useUserStoreHook} from "@/store/modules/user";
 import router from "@/router";
-import {reactive, toRaw, markRaw, customRef, Ref} from "vue";
+import {ref, reactive, toRaw, markRaw, customRef, Ref, InjectionKey, provide, inject} from "vue";
+import childComponent from "./component/childComponent.vue"
+import ChildComponent from "@/views/home/component/childComponent.vue";
 
 interface Skill {
     name: String;
@@ -34,6 +37,19 @@ interface Person {
     },
     car?: any
 }
+
+let childName = ref("宇智波佐助")
+let childParams = reactive<ChildParams>({
+    name: "佐助",
+    age: 22,
+    remark: {skill: "火遁"}
+})
+
+// const key = Symbol() as InjectionKey<string>
+
+provide('aa', 'foo') // 若提供的是非字符串值会导致错误
+
+
 
 let person = reactive<Person>(
     {
@@ -94,6 +110,10 @@ function logout () {
 function tabsFn () {
   console.log(router.getRoutes())
   router.push("/tabs")
+}
+
+function changeSth (data: string) {
+    console.log(data)
 }
 </script>
 
