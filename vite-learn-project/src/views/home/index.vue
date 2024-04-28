@@ -15,6 +15,7 @@
           <h3>{{keyword}}</h3>
           <input type="text" v-model="keyword">
       </div>
+      <div class="btn" @click="toDetailPage">detail page</div>
   </div>
 </template>
 
@@ -110,6 +111,10 @@ function logout () {
 function tabsFn () {
   console.log(router.getRoutes())
   router.push("/tabs")
+}
+
+function toDetailPage() {
+    router.push("/home/detail")
 }
 
 function changeSth (data: string) {
