@@ -59,7 +59,75 @@ let getSum = (arr: number[], callback: (...args: number[]) => number): number =>
 
 const getSum1 = getSum([1,2,3], (...args: number[]): number => args.reduce((a, b) => a + b, 0))
 
+// 高级类型
+// 1,类型保护  typeof instanceof
 
+  //链式调用
+class NumberCount {
+    constructor(public count: number = 0) {}
+
+    addCount(num: number) {
+        this.count += num
+        return this
+    }
+
+    delCount(num: number) {
+        this.count -= num
+        return this
+    }
+}
+
+const numberCount1 = new NumberCount(10)
+// console.log(numberCount1.addCount(10).delCount(5))
+
+// keyof使用
+function getValueFn<T, K extends keyof T>(obj: T, keys: K[]): Array<T[K]> {
+    return keys.map((n) => obj[n])
+}
+
+const info1 = {
+    name: 'jack',
+    age: 18
+}
+
+console.log(getValueFn(info1, ['name', 'age']))
+
+interface Obj1<K> {
+    [key: number]: K
+}
+
+let keys1: keyof Obj1<number>
+let keys2: keyof Obj1<string>
+
+interface MyTypes {
+    a: number
+    b: string
+    e: undefined
+    f: never
+    g: object
+}
+
+type MyTypesObj = MyTypes[keyof MyTypes]
+let res1: MyTypesObj = 1
+
+// 隐射类型demo
+type MyTypesReadOnly<T> = {
+    readonly [P in keyof T]: T[P]
+}
+
+type MyTypes2 = MyTypesReadOnly<MyTypes>
+
+// Record
+type Record<K extends keyof any, T> =  {
+    [P in K]: T
+}
+
+type MyTypesRecord = Record<number, number>
+let res3: MyTypesRecord = {
+    1: 11
+}
+
+// 
 
 </script>
 
