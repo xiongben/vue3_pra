@@ -127,7 +127,47 @@ let res3: MyTypesRecord = {
     1: 11
 }
 
-// 
+//unknown
+type type3 = keyof unknown
+type type4 = never extends unknown ? true : false
+
+// Exclude
+type Diff<D, U> = D extends U ? never : D
+type type5 = Diff<string | number | boolean , number | undefined>
+type type6 = Exclude<string | number | boolean , number | undefined>
+
+type Part =  {
+    id: never
+    name: string
+    age: number
+    desc: never
+    function1: Function
+    function2: Function
+}
+
+type type7 = Part[keyof Part]
+
+type Type8<T> = {
+    [K in keyof T]: T[K] extends Function ? K : never
+}[keyof T]
+
+type type9 = Type8<Part>
+type type10 = never extends Function ? true : false
+
+// infer
+type type11<T> = T extends Array<any> ? T[number] : T
+type type12 = Array<string>
+type type13 = type11<type12>
+
+type infer1<T> = T extends Array<infer U> ? U : T
+type type14 = infer1<type12>
+
+// ReturnType<T>
+type returnType1<T> = T extends () => infer R ? R : never
+type type15 = () => string
+type type16 = returnType1<type15>
+
+// instanceType
 
 </script>
 
