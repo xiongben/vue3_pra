@@ -168,6 +168,13 @@ type type15 = () => string
 type type16 = returnType1<type15>
 
 // instanceType
+type instanceType1<T extends new (...args:any[]) => any> = T extends new (...args:any[]) => infer U ? U : any
+class AClass {
+    constructor() {
+    }
+}
+type type17 = instanceType1<typeof AClass>
+type type18 = instanceType1<any>
 
 </script>
 
