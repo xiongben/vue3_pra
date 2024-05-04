@@ -176,6 +176,26 @@ class AClass {
 type type17 = instanceType1<typeof AClass>
 type type18 = instanceType1<any>
 
+// decoration demo
+function classDecorator<T extends {new(...args: any[]): {}}>(target: T) {
+    return class extends target {
+        public newProperty = 'new property'
+        public hello = 'override'
+    }
+}
+@classDecorator
+class Greeter {
+    public property = 'property'
+    public hello:string
+    constructor(m: string) {
+        this.hello = m
+    }
+}
+
+// console.log(new Greeter('world'))
+
+
+
 </script>
 
 <style scoped>
