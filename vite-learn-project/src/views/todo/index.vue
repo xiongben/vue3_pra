@@ -1,6 +1,10 @@
 <template>
   <div class="list-box">
-      <p class="font-bold text-lg text-blue-600">todo list</p>
+      <div class="flex flex-row gap-4 my-2">
+        <p class="font-bold text-lg text-blue-600">todo list</p>
+        <div class="bg-blue-400 text-white px-2 rounded-md" @click="addItem">add</div>
+      </div>
+
       <TodoItem :detail="detailInfo"/>
     <TodoItem v-for="item in detailInfoList" :detail="item"/>
   </div>
@@ -23,7 +27,7 @@ const detailInfoList: Ref<DetailInfo[]> = ref([])
 getListFn()
 
 function getListFn() {
-  for(let i = 0; i < 10; i++) {
+  for(let i = 0; i < 5; i++) {
     const item: DetailInfo = {
       title: 'this is ' + (i + 1),
       name: 'Mike',
@@ -32,6 +36,17 @@ function getListFn() {
     }
     detailInfoList.value.push(item)
   }
+}
+
+function addItem() {
+  const index: number = detailInfoList.value.length + 1
+  const item: DetailInfo = {
+    title: 'this is ' + index,
+    name: 'Mike',
+    score: 99,
+    isEdit: false
+  }
+  detailInfoList.value.push(item)
 }
 
 </script>
