@@ -8,7 +8,6 @@ import {
 } from "vue-router";
 
 import remainingRouter from "./modules/remaining";
-import {toRouteType} from "@/types/global";
 import {
     ascending,
     formatFlatteningRoutes,

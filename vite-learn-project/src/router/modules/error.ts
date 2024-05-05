@@ -1,5 +1,4 @@
 import { error } from "../enums";
-import {RouteConfigsTable} from "@/types/global";
 
 export default {
     path: "/error",

@@ -1,5 +1,4 @@
 import { home } from "../enums";
-import { RouteConfigsTable } from "@/types/global";
 
 export default {
     path: "/home",
@@ -27,6 +26,16 @@ export default {
             meta: {
                 icon: "card",
                 title: "homeDetail",
+                showParent: true
+            }
+        },
+        {
+            path: "/home/todo",
+            name: "HomeTodo",
+            component: () => import("../../views/todo/index.vue"),
+            meta: {
+                icon: "card",
+                title: "todoIndex",
                 showParent: true
             }
         }
