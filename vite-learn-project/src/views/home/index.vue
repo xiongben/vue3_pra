@@ -16,6 +16,7 @@
           <input type="text" v-model="keyword">
       </div>
       <div class="btn" @click="toDetailPage">detail page</div>
+      <div class="btn" @click="toSonPage">component page</div>
   </div>
 </template>
 
@@ -25,21 +26,21 @@ import {useUserStoreHook} from "@/store/modules/user";
 import router from "@/router";
 import {ref, reactive, toRaw, markRaw, customRef, Ref, InjectionKey, provide, inject} from "vue";
 import childComponent from "./component/childComponent.vue"
-import ChildComponent from "@/views/home/component/childComponent.vue";
 
 interface Skill {
-    name: String;
+    name: string;
 }
 interface Person {
-    name: String;
+    name: string;
     age: number;
     skill: {
         [name: string]: Skill
     },
-    car?: any
+    car?: never
 }
 
 let childName = ref("宇智波佐助")
+// eslint-disable-next-line no-undef
 let childParams = reactive<ChildParams>({
     name: "佐助",
     age: 22,
@@ -115,6 +116,10 @@ function tabsFn () {
 
 function toDetailPage() {
     router.push("/home/detail")
+}
+
+function toSonPage() {
+  router.push("/home/son")
 }
 
 function changeSth (data: string) {

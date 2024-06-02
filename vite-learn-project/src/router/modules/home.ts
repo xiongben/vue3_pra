@@ -30,6 +30,16 @@ export default {
             }
         },
         {
+            path: "/home/son",
+            name: "HomeSon",
+            component: () => import("../../views/home/son.vue"),
+            meta: {
+                icon: "card",
+                title: "homeSon",
+                showParent: false
+            }
+        },
+        {
             path: "/home/todo",
             name: "HomeTodo",
             component: () => import("../../views/todo/index.vue"),

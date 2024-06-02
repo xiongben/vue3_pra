@@ -14,7 +14,6 @@
 <script setup lang="ts">
 import TodoItem from "@/views/todo/component/todoItem.vue";
 import {ref, Ref} from "vue";
-import message from "@/views/components/message/message"
 
 const detailInfo: Ref<DetailInfo> = ref({
   title: 'first one',
@@ -22,9 +21,6 @@ const detailInfo: Ref<DetailInfo> = ref({
   score: 99,
   isEdit: false
 })
-
-message.success('这是一个成功报警')
-message.error('这是一个错误报警')
 
 const detailInfoList: Ref<DetailInfo[]> = ref([])
 

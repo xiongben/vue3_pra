@@ -7,8 +7,6 @@
 <script setup lang="ts">
 
 
-import {numberToChinese} from "@pureadmin/utils";
-
 let a:any
 a = 22
 a = 'this is a word'

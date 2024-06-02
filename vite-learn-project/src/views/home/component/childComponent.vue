@@ -1,35 +1,28 @@
 <template>
-  <div>
-     <h3>home child component</h3>
-      <h4>{{name}} {{detail.remark}}</h4>
-      <div @click="changeFn">change sth</div>
+  <div class="box">
+    <p>son component part</p>
+    <p>pageSize: {{pageSize}}</p>
+    <p>pageNo: {{pageNo}}</p>
+    <div @click="changeFn" class="w-40 p-2 flex justify-center items-center bg-blue-500 text-white cursor-pointer rounded-md">Change Number</div>
   </div>
 </template>
 
 <script setup lang="ts">
 
-import {inject} from "vue";
+const $emit = defineEmits(['update:pageSize', 'update:pageNo'])
 
-const emits = defineEmits(['changeSth'])
-
-const foo = inject<string>('aa')
-console.log(foo)
-
-const props = withDefaults(
-    defineProps<{
-        name: string
-        detail?: ChildParams
-    }>(),
-    {
-        name: "kaka",
-    }
-)
+const props = defineProps(['pageSize', 'pageNo'])
 
 function changeFn () {
-    emits('changeSth', '===666===')
+  $emit('update:pageSize', props.pageSize + 1)
+  $emit('update:pageNo', props.pageNo + 1)
 }
 </script>
 
 <style scoped>
-
+.box {
+  border: 1px solid red;
+  padding: 15px;
+  margin: 15px;
+}
 </style>
