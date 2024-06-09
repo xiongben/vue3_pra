@@ -7,7 +7,7 @@ import { join } from "path";
 
 // https://vitejs.dev/config/
 export default ({ command }: ConfigEnv): UserConfigExport => {
-  let prodMock = true
+  const prodMock = true
   return {
     resolve: {
       alias: {

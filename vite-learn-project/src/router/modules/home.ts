@@ -32,7 +32,7 @@ export default {
         {
             path: "/home/son",
             name: "HomeSon",
-            component: () => import("../../views/home/son.vue"),
+            component: () => import("../../views/home/PracticeDemo.vue"),
             meta: {
                 icon: "card",
                 title: "homeSon",
