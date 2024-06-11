@@ -5,7 +5,7 @@
     <p>pageNo: {{pageNo}}</p>
     <div @click="changeFn" class="w-40 p-2 flex justify-center items-center bg-blue-500 text-white cursor-pointer rounded-md">Change Number</div>
     <transition name="fade">
-      <p v-if="show">木叶忍者学校</p>
+      <p v-if="show" class="text-color">木叶忍者学校</p>
     </transition>
     <div class="p-3 bg-pink-500" @click="toggle">toggle</div>
   </div>
@@ -20,6 +20,10 @@ const props = defineProps(['pageSize', 'pageNo'])
 
 const show = ref(false)
 
+const styleObj = ref({
+  color: '#008866'
+})
+
 function changeFn () {
   $emit('update:pageSize', props.pageSize + 1)
   $emit('update:pageNo', props.pageNo + 1)
@@ -31,6 +35,9 @@ function toggle() {
 </script>
 
 <style scoped>
+.text-color {
+  color: v-bind('styleObj.color')
+}
 .box {
   border: 1px solid red;
   padding: 15px;
