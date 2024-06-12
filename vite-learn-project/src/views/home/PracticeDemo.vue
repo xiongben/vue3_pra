@@ -25,6 +25,12 @@
           </p>
         </div>
       </child-component2>
+      <div>
+        <p>useModel practice demo</p>
+        <p>testVal: {{testVal}}</p>
+        <child-component3 ref="child3" v-model="testVal" />
+        <button class="h-10 px-5 rounded-md border border-slate-200 text-slate-900" @click="testChildFn">say</button>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +40,7 @@
 import { reactive, ref, version, defineAsyncComponent, toRefs } from "vue";
 import ChildComponent2 from "@/views/home/component/childComponent2.vue";
 import CustomerUser from "@/components/customElement/CustomerUser.vue";
+import ChildComponent3 from "@/views/home/component/childComponent3.vue";
 
 const ChildComponent = defineAsyncComponent({
   loader:() => import('@/views/home/component/childComponent.vue'),
@@ -47,12 +54,16 @@ const ChildComponent = defineAsyncComponent({
   timeout: 3000
 })
 
+const child3 = ref()
+
 let pageSize = ref(10)
 let pageNo = ref(0)
 let aa = 11
 let userName = reactive({
   name: "Jack"
 })
+
+const testVal = ref('是宇智波的人')
 
 testToRefs()
 
@@ -65,7 +76,9 @@ function testToRefs() {
   console.log(foo.value, bar.value)
 }
 
-
+function testChildFn() {
+  child3.value.sayFn()
+}
 </script>
 
 <style scoped>
